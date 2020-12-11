@@ -1,67 +1,30 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 class App {
-    public static void main(String[] args) {
-        // System.out.println("Hola otra vez!");
+    public static void main(String[] args) throws IOException {
+        Calculadora calc = new Calculadora();
 
-        // double numeroA = 5;
-        // double numeroB = 6;
-        // double numeroC = numeroA + numeroB;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        // boolean condicion = numeroC < 10;
-        // if (condicion) {
-        // System.out.println("Resultado: " + numeroC);
-        // } else {
-        // System.out.println("El número es mayor a 10");
-        // }
+        System.out.println("Ingrese el primer valor:");
+        double x = Double.parseDouble(br.readLine());
 
-        // String tipo = "C";
+        System.out.println("Ingrese el segundo valor:");
+        double y = Double.parseDouble(br.readLine());
 
-        // switch (tipo) {
-        // case "A":
-        // System.out.println("El tipo de variable es A");
-        // break;
-        // case "B":
-        // System.out.println("El tipo de variable es B");
-        // break;
-        // case "C":
-        // System.out.println("El tipo de variable es C");
-        // break;
-        // }
+        System.out.println(
+                String.format("El resultado de multiplicar %.0f y %.0f es: %.2f", x, y, calc.multiplicar(x, y)));
 
-        // for (int i = 0; i < 10; i++) {
-        // System.out.println(i);
-        // }
-
-        // List<String> numeros = new ArrayList<>();
-        // numeros.add("Uno");
-        // numeros.add("Dos");
-        // numeros.add("Tres");
-        // numeros.add("Cuatro");
-        // numeros.add("Cinco");
-        // numeros.add("Seis");
-        // numeros.add("Siete");
-
-        // for (String numero : numeros) {
-        // // System.out.println(numero);
-        // }
-
-        // int x = 0;
-        // while (x < 10) {
-        // System.out.println("Sigo en el loop - " + x);
-        // x++;
-        // }
-
-        // saludar(generarSaludo("Andy"));
-        // if (esPar(6)) {
-        // System.out.println("El número es par");
-        // } else {
-        // System.out.println("El número es inpar");
-        // }
-
-        mostrarDesdeHasta(150, 155);
-        // CTRL + }
+        // Solicitar en consola un tipo de función a utilizar, por ejm: S -> sumar, R ->
+        // restar, etc.
+        // Solicitar el primer valor
+        // Solicitar el segundo valor
+        // Solicitar el tercer valor
+        // Mostrar el resultado de la operación en pantalla, indicando el nombre
+        // completo de la operación y el resultado.
+        // Por ejm: El resultado de sumar: 5, 6, 7 es: 18
     }
 
     public static void saludar(String saludo) {
@@ -70,22 +33,5 @@ class App {
 
     public static String generarSaludo(String nombre) {
         return "Bienvenido " + nombre + "!";
-    }
-
-    public static boolean esPar(int numero) {
-        return numero % 2 == 0;
-    }
-
-    // Crear un método que muestre los números desde X hasta Y (enteros)
-    public static void mostrarDesdeHasta(int x, int y) {
-        while (x <= y) {
-            System.out.println(x);
-            x++;
-        }
-    }
-
-    // Crear un método que muestre la serie de fibonacci hasta un número X definido
-    public static void fibonacci(int x) {
-
     }
 }
