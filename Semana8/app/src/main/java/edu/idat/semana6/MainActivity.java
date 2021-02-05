@@ -34,11 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
         PostAdapter adapter = new PostAdapter(this, R.layout.item_post, PostRepository.list());
         lsvPosts.setAdapter(adapter);
-
-        List<Usuario> usuarios = new List<Usuario>();
-        usuarios.add(new Usuario(1, "Díaz", "Perez", "Javier", "01/01/2010"));
-        usuarios.add(new Usuario(2, "Díaz", "Perez", "Javier", "01/01/2010"));
-        usuarios.add(new Usuario(3, "Díaz", "Perez", "Javier", "01/01/2010"));
     }
 
     @Override
