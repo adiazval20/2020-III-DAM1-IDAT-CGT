@@ -2,6 +2,7 @@ package edu.idat.semana6;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,10 +26,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = findViewById(R.id.tlbMain);
+        toolbar.setTitle("IdatGram");
+        setSupportActionBar(toolbar);
+
         lsvPosts = findViewById(R.id.lsvPosts);
 
         PostAdapter adapter = new PostAdapter(this, R.layout.item_post, PostRepository.list());
         lsvPosts.setAdapter(adapter);
+
+        List<Usuario> usuarios = new List<Usuario>();
+        usuarios.add(new Usuario(1, "Díaz", "Perez", "Javier", "01/01/2010"));
+        usuarios.add(new Usuario(2, "Díaz", "Perez", "Javier", "01/01/2010"));
+        usuarios.add(new Usuario(3, "Díaz", "Perez", "Javier", "01/01/2010"));
     }
 
     @Override
