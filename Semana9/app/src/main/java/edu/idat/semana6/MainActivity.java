@@ -3,6 +3,8 @@ package edu.idat.semana6;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +34,15 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("IdatGram");
         setSupportActionBar(toolbar);
 
-        lsvPosts = findViewById(R.id.lsvPosts);
-
-        PostAdapter adapter = new PostAdapter(this, R.layout.item_post, PostRepository.list());
-        lsvPosts.setAdapter(adapter);
+        BottomNavigationView bnvSecciones = findViewById(R.id.bnvSecciones);
+        bnvSecciones.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                loadFragment(item.getItemId());
+                return true;
+            }
+        });
+        loadFragment(R.id.optInicio);
     }
 
     @Override
@@ -51,5 +60,25 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    private void loadFragment(int itemId) {
+        Fragment fragment = new Fragment();
+
+        switch (itemId) {
+            case R.id.optInicio:
+                fragment = new InicioFragment();
+                break;
+            case R.id.optBuscar:
+                fragment = new BuscarFragment();
+                break;
+            case R.id.optPerfil:
+                fragment = new PerfilFragment();
+                break;
+        }
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frmContainer, fragment);
+        transaction.commit();
     }
 }
