@@ -5,11 +5,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 
 import edu.idat.semana6.adapter.PostAdapter;
@@ -30,8 +32,10 @@ public class InicioFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        ListView lsvPosts = view.findViewById(R.id.lsvPosts);
-        PostAdapter adapter = new PostAdapter(getContext(), R.layout.item_post, PostRepository.list());
-        lsvPosts.setAdapter(adapter);
+        RecyclerView rcvPosts = view.findViewById(R.id.rcvPosts);
+        rcvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        PostAdapter adapter = new PostAdapter(PostRepository.list());
+        rcvPosts.setAdapter(adapter);
     }
 }

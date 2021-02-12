@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
@@ -18,30 +19,28 @@ import java.util.List;
 import edu.idat.semana6.R;
 import edu.idat.semana6.entity.Post;
 
-public class PostAdapter extends ArrayAdapter<Post> {
-    public PostAdapter(@NonNull Context context, int resource, @NonNull List<Post> objects) {
-        super(context, resource, objects);
+public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
+    private List<Post> posts;
+
+    public PostAdapter(List<Post> posts) {
+        this.posts = posts;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_post, parent, false);
-        }
+    public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post, parent, false);
+        return new PostViewHolder(view);
+    }
 
-        Post post = getItem(position);
+    @Override
+    public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
+        Post post = posts.get(position);
+        holder.loadData(post);
+    }
 
-        ImageView imgPost = convertView.findViewById(R.id.imgPost);
-        TextView txtTitulo = convertView.findViewById(R.id.txtTitulo);
-        TextView txtDescripcion = convertView.findViewById(R.id.txtDescripcion);
-
-//        imgPost.setImageResource(post.getUrlImagen());
-        Picasso.get().load(post.getUrlImagen()).into(imgPost);
-
-        txtTitulo.setText(post.getTitulo());
-        txtDescripcion.setText(post.getDescripcion());
-
-        return convertView;
+    @Override
+    public int getItemCount() {
+        return posts.size();
     }
 }
