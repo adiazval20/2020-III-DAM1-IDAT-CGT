@@ -75,33 +75,35 @@ public class MainActivity extends AppCompatActivity {
     private void loadFragment(int itemId) {
         int posicionActual = posicionesMenu.get(itemId);
 
-        Fragment fragment = new Fragment();
+        if (posicionActual != ultimaPosicionSeleccionada) {
+            Fragment fragment = new Fragment();
 
-        switch (itemId) {
-            case R.id.optInicio:
-                fragment = new InicioFragment();
-                break;
-            case R.id.optBuscar:
-                fragment = new BuscarFragment();
-                break;
-            case R.id.optPerfil:
-                fragment = new PerfilFragment();
-                break;
+            switch (itemId) {
+                case R.id.optInicio:
+                    fragment = new InicioFragment();
+                    break;
+                case R.id.optBuscar:
+                    fragment = new BuscarFragment();
+                    break;
+                case R.id.optPerfil:
+                    fragment = new PerfilFragment();
+                    break;
+            }
+
+            int animacionIn, animacionOut;
+            if (posicionActual > ultimaPosicionSeleccionada) {
+                animacionIn = R.anim.slide_to_left_in;
+                animacionOut = R.anim.slide_to_left_out;
+            } else {
+                animacionIn = R.anim.slide_to_right_in;
+                animacionOut = R.anim.slide_to_right_out;
+            }
+            ultimaPosicionSeleccionada = posicionActual;
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(animacionIn, animacionOut);
+            transaction.replace(R.id.frmContainer, fragment);
+            transaction.commit();
         }
-
-        int animacionIn, animacionOut;
-        if (posicionActual > ultimaPosicionSeleccionada) {
-            animacionIn = R.anim.slide_to_left_in;
-            animacionOut = R.anim.slide_to_left_out;
-        } else {
-            animacionIn = R.anim.slide_to_right_in;
-            animacionOut = R.anim.slide_to_right_out;
-        }
-        ultimaPosicionSeleccionada = posicionActual;
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(animacionIn, animacionOut);
-        transaction.replace(R.id.frmContainer, fragment);
-        transaction.commit();
     }
 }
