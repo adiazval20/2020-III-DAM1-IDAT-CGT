@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import edu.idat.semana6.adapter.PostAdapter;
@@ -23,7 +24,8 @@ import edu.idat.semana6.entity.Post;
 import edu.idat.semana6.repository.PostRepository;
 
 public class MainActivity extends AppCompatActivity {
-    private ListView lsvPosts;
+    private HashMap<Integer, Integer> posicionesMenu;
+    private int ultimaPosicionSeleccionada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.tlbMain);
         toolbar.setTitle("IdatGram");
         setSupportActionBar(toolbar);
+
+        posicionesMenu = new HashMap<>();
+        posicionesMenu.put(R.id.optInicio, 1);
+        posicionesMenu.put(R.id.optBuscar, 2);
+        posicionesMenu.put(R.id.optPerfil, 3);
+
+        ultimaPosicionSeleccionada = 0;
 
         BottomNavigationView bnvSecciones = findViewById(R.id.bnvSecciones);
         bnvSecciones.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -57,12 +66,15 @@ public class MainActivity extends AppCompatActivity {
             case R.id.optCrearPost:
                 Intent intent = new Intent(this, PostDataActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
         }
         return true;
     }
 
     private void loadFragment(int itemId) {
+        int posicionActual = posicionesMenu.get(itemId);
+
         Fragment fragment = new Fragment();
 
         switch (itemId) {
@@ -77,7 +89,18 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+        int animacionIn, animacionOut;
+        if (posicionActual > ultimaPosicionSeleccionada) {
+            animacionIn = R.anim.slide_to_left_in;
+            animacionOut = R.anim.slide_to_left_out;
+        } else {
+            animacionIn = R.anim.slide_to_right_in;
+            animacionOut = R.anim.slide_to_right_out;
+        }
+        ultimaPosicionSeleccionada = posicionActual;
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(animacionIn, animacionOut);
         transaction.replace(R.id.frmContainer, fragment);
         transaction.commit();
     }
