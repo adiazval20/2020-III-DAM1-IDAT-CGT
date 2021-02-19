@@ -20,6 +20,7 @@ public class PostDataActivity extends AppCompatActivity {
     private EditText edtTitulo, edtDescripcion;
     private Button btnTomarFoto, btnCancelar, btnGuardar;
     private ImageView imgFoto;
+    private Bitmap miniatura;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class PostDataActivity extends AppCompatActivity {
                 Post post = new Post();
                 post.setTitulo(edtTitulo.getText().toString());
                 post.setDescripcion(edtDescripcion.getText().toString());
+                post.setImagen(miniatura);
                 PostRepository.save(post);
                 finish();
             }
@@ -67,8 +69,8 @@ public class PostDataActivity extends AppCompatActivity {
             case REQUEST_IMAGE_CAPTURE:
                 if (data != null) {
                     Bundle extras = data.getExtras();
-                    Bitmap foto = (Bitmap) extras.get("data");
-                    imgFoto.setImageBitmap(foto);
+                    miniatura = (Bitmap) extras.get("data");
+                    imgFoto.setImageBitmap(miniatura);
                 }
                 break;
         }

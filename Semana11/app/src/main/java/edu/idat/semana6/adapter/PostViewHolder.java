@@ -25,7 +25,8 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void loadData(Post post) {
-        Picasso.get().load(post.getUrlImagen()).into(imgPost);
+//        Picasso.get().load(post.getUrlImagen()).into(imgPost);
+        imgPost.setImageBitmap(post.getImagen());
         txtTitulo.setText(post.getTitulo());
         txtDescripcion.setText(post.getDescripcion());
     }

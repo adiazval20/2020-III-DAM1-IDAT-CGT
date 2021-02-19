@@ -1,10 +1,13 @@
 package edu.idat.semana6.entity;
 
+import android.graphics.Bitmap;
+
 public class Post {
     private long id;
     private String titulo;
     private String descripcion;
     private String urlImagen;
+    private Bitmap imagen;
 
 //    CTRL + SHIFT + F6
 
@@ -49,5 +52,13 @@ public class Post {
 
     public void setUrlImagen(String urlImagen) {
         this.urlImagen = urlImagen;
+    }
+
+    public Bitmap getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Bitmap imagen) {
+        this.imagen = imagen;
     }
 }
