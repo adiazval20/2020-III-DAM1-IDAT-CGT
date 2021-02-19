@@ -36,27 +36,68 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/txtPublicaciones"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="520"
-                android:textSize="24dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/txtTextoPublicaciones"
+                app:layout_constraintBottom_toBottomOf="@+id/imgUser"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imgUser"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/txtTextoPublicaciones"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Publicaciones"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgUser"
-                app:layout_constraintTop_toBottomOf="@+id/txtPublicaciones" />
+                <TextView
+                    android:id="@+id/txtPublicaciones"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="520"
+                    android:textAlignment="center"
+                    android:textSize="24dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/txtTextoPublicaciones"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.5" />
+
+                <TextView
+                    android:id="@+id/txtTextoPublicaciones"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Publicaciones"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtPublicaciones"
+                    app:layout_constraintWidth_percent="0.5" />
+
+                <TextView
+                    android:id="@+id/txtSeguidores"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="850"
+                    android:textAlignment="center"
+                    android:textSize="24dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/txtTextoSeguidores"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/txtPublicaciones"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.5" />
+
+                <TextView
+                    android:id="@+id/txtTextoSeguidores"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Seguidores"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/txtTextoPublicaciones"
+                    app:layout_constraintTop_toBottomOf="@+id/txtSeguidores"
+                    app:layout_constraintWidth_percent="0.5" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
