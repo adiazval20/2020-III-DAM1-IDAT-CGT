@@ -8,8 +8,8 @@ public class Post {
     private String descripcion;
     private String urlImagen;
     private Bitmap imagen;
+    private String nombreImagen;
 
-//    CTRL + SHIFT + F6
 
     public Post() {
 
@@ -60,5 +60,13 @@ public class Post {
 
     public void setImagen(Bitmap imagen) {
         this.imagen = imagen;
+    }
+
+    public String getNombreImagen() {
+        return nombreImagen;
+    }
+
+    public void setNombreImagen(String nombreImagen) {
+        this.nombreImagen = nombreImagen;
     }
 }

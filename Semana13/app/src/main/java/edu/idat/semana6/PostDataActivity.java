@@ -1,9 +1,11 @@
 package edu.idat.semana6;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +17,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +38,7 @@ import edu.idat.semana6.repository.PostRepository;
 public class PostDataActivity extends AppCompatActivity {
     private final int REQUEST_IMAGE_CAPTURE = 1;
     private final int REQUEST_IMAGE_FILE = 2;
+    private FirebaseStorage storage;
     private EditText edtTitulo, edtDescripcion;
     private Button btnTomarFoto, btnCancelar, btnGuardar;
     private ImageView imgFoto;
@@ -37,6 +49,8 @@ public class PostDataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_data);
+
+        storage = FirebaseStorage.getInstance();
 
         edtTitulo = findViewById(R.id.edtTitulo);
         edtDescripcion = findViewById(R.id.edtDescripcion);
@@ -62,13 +76,16 @@ public class PostDataActivity extends AppCompatActivity {
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                File foto = new File(rutaFoto);
+
                 Post post = new Post();
                 post.setTitulo(edtTitulo.getText().toString());
                 post.setDescripcion(edtDescripcion.getText().toString());
-//                post.setImagen(miniatura);
                 post.setUrlImagen(rutaFoto);
+                post.setNombreImagen(foto.getName());
                 PostRepository.save(post);
-                finish();
+
+                uploadFile(foto);
             }
         });
     }
@@ -121,5 +138,34 @@ public class PostDataActivity extends AppCompatActivity {
         File foto = File.createTempFile(nombreArchivo, ".jpg", directorio);
         rutaFoto = foto.getAbsolutePath();
         return foto;
+    }
+
+    private void uploadFile(File file) {
+        // Ruta en la nube donde se va a almacenar el archivo
+        String ruta = "fotos/" + file.getName();
+
+        // Obtengo la referencia de la ruta en la nube
+        StorageReference reference = storage.getReference(ruta);
+
+        Uri uri = Uri.fromFile(file);
+        Context context = this;
+
+        UploadTask tareaSubir = reference.putFile(uri);
+        tareaSubir.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(context, "Archivo subido correctamente", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                finish();
+            }
+        });
     }
 }
