@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,73 +16,81 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
-public class LoginActivity extends AppCompatActivity {
+public class UserActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private EditText edtUsername, edtPassword;
-    private Button btnLogin, btnSignin;
+    private Button btnGuardar, btnCancelar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_user);
 
         auth = FirebaseAuth.getInstance();
 
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnSignin = findViewById(R.id.btnSignin);
+        btnGuardar = findViewById(R.id.btnGuardar);
+        btnCancelar = findViewById(R.id.btnCancelar);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        Context context = this;
+        btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = edtUsername.getText().toString().trim();
                 String password = edtPassword.getText().toString().trim();
 
                 if (username.equals("") || password.equals("")) {
-                    Toast.makeText(LoginActivity.this, "Debe ingresar usuario y contraseña", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Debe ingresar usuario y contraseña", Toast.LENGTH_SHORT).show();
                 } else {
-                    login(username, password);
+                    crearUsuario(username, password);
                 }
             }
         });
 
-        Context context = this;
-        btnSignin.setOnClickListener(new View.OnClickListener() {
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, UserActivity.class));
+                finish();
             }
         });
     }
 
-    private void login(String username, String password) {
+    private void crearUsuario(String username, String password) {
         Activity context = this;
 
-        auth.signInWithEmailAndPassword(username, password).addOnCompleteListener(context, new OnCompleteListener<AuthResult>() {
+        auth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(context, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    FirebaseUser user = auth.getCurrentUser();
-                    Toast.makeText(context, String.format("Bienvenido %s", user.getEmail()), Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(context, HomeActivity.class));
+                    Toast.makeText(context, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
                     String mensaje = "";
                     String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
+
                     switch (errorCode) {
                         case "ERROR_INVALID_EMAIL":
-                            mensaje = "El usuario ingresado no tiene un formato válido";
+                            mensaje = "El email no tiene un formato correcto";
                             break;
-                        case "ERROR_USER_NOT_FOUND":
-                            mensaje = "El usuario no existe";
-                            break;
-                        case "ERROR_WRONG_PASSWORD":
-                            mensaje = "La contraseña es incorrecta";
+                        case "ERROR_EMAIL_ALREADY_IN_USE":
+                            mensaje = "El email ya se encuentra registrado";
                             break;
                     }
-//                    Toast.makeText(context, errorCode, Toast.LENGTH_LONG).show();
+//                    try {
+//                        throw task.getException();
+//                    } catch (FirebaseAuthInvalidCredentialsException ex) {
+//                        mensaje = "El email no tiene un formato correcto";
+//                    } catch (FirebaseAuthUserCollisionException ex) {
+//                        mensaje = "El email ya se encuentra registrado";
+//                    } catch (Exception e) {
+//                        mensaje = "Se produció un error en el sistema";
+//                        e.printStackTrace();
+//                    }
                     Toast.makeText(context, mensaje, Toast.LENGTH_LONG).show();
                 }
             }
