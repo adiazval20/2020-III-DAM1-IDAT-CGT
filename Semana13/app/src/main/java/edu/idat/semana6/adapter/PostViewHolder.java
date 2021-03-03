@@ -1,5 +1,7 @@
 package edu.idat.semana6.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,7 +28,9 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
 
     public void loadData(Post post) {
 //        Picasso.get().load(post.getUrlImagen()).into(imgPost);
-        imgPost.setImageBitmap(post.getImagen());
+        Bitmap foto = BitmapFactory.decodeFile(post.getUrlImagen());
+        imgPost.setImageBitmap(foto);
+
         txtTitulo.setText(post.getTitulo());
         txtDescripcion.setText(post.getDescripcion());
     }

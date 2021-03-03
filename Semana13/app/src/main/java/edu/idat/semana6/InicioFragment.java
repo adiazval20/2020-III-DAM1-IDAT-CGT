@@ -18,6 +18,7 @@ import edu.idat.semana6.adapter.PostAdapter;
 import edu.idat.semana6.repository.PostRepository;
 
 public class InicioFragment extends Fragment {
+    private PostAdapter adapter;
 
     public InicioFragment() {
         // Required empty public constructor
@@ -35,7 +36,14 @@ public class InicioFragment extends Fragment {
         RecyclerView rcvPosts = view.findViewById(R.id.rcvPosts);
         rcvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        PostAdapter adapter = new PostAdapter(PostRepository.list());
+        adapter = new PostAdapter();
         rcvPosts.setAdapter(adapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        adapter.loadData(PostRepository.list());
     }
 }

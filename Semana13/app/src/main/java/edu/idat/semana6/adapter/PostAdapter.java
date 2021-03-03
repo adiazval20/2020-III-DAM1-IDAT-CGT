@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.idat.semana6.R;
@@ -21,6 +22,10 @@ import edu.idat.semana6.entity.Post;
 
 public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
     private List<Post> posts;
+
+    public PostAdapter() {
+        this.posts = new ArrayList<>();
+    }
 
     public PostAdapter(List<Post> posts) {
         this.posts = posts;
@@ -42,5 +47,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
     @Override
     public int getItemCount() {
         return posts.size();
+    }
+
+    public void loadData(List<Post> posts) {
+        this.posts.clear();
+        this.posts.addAll(posts);
+        this.notifyDataSetChanged();
     }
 }
