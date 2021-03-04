@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "604937581091",
+    "project_id": "dam1-cgt-clases",
+    "storage_bucket": "dam1-cgt-clases.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604937581091:android:61099227b989618997b796",
+        "android_client_info": {
+          "package_name": "edu.idat.semana6"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604937581091-05ko5fge334o7221schoraqmjt4ae613.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBam0xZZJpcBlGY3w_tU6cy5jcPMWXp5tg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604937581091-05ko5fge334o7221schoraqmjt4ae613.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
