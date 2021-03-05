@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,10 +16,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.List;
+
 import edu.idat.semana6.adapter.PostAdapter;
+import edu.idat.semana6.entity.Post;
 import edu.idat.semana6.repository.PostRepository;
+import edu.idat.semana6.viewmodel.InicioViewModel;
 
 public class InicioFragment extends Fragment {
+    private InicioViewModel viewModel;
+
     private PostAdapter adapter;
 
     public InicioFragment() {
@@ -33,6 +41,8 @@ public class InicioFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        viewModel = new ViewModelProvider(this).get(InicioViewModel.class);
+
         RecyclerView rcvPosts = view.findViewById(R.id.rcvPosts);
         rcvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -44,6 +54,11 @@ public class InicioFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        adapter.loadData(PostRepository.list());
+        viewModel.listPost().observe(this, new Observer<List<Post>>() {
+            @Override
+            public void onChanged(List<Post> posts) {
+                adapter.loadData(posts);
+            }
+        });
     }
 }

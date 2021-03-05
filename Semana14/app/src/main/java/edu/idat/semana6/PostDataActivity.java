@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
@@ -34,8 +35,10 @@ import java.util.Date;
 
 import edu.idat.semana6.entity.Post;
 import edu.idat.semana6.repository.PostRepository;
+import edu.idat.semana6.viewmodel.PostDataViewModel;
 
 public class PostDataActivity extends AppCompatActivity {
+    private PostDataViewModel viewModel;
     private final int REQUEST_IMAGE_CAPTURE = 1;
     private final int REQUEST_IMAGE_FILE = 2;
     private FirebaseStorage storage;
@@ -49,6 +52,8 @@ public class PostDataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_data);
+
+        viewModel = new ViewModelProvider(this).get(PostDataViewModel.class);
 
         storage = FirebaseStorage.getInstance();
 
@@ -83,7 +88,7 @@ public class PostDataActivity extends AppCompatActivity {
                 post.setDescripcion(edtDescripcion.getText().toString());
                 post.setUrlImagen(rutaFoto);
                 post.setNombreImagen(foto.getName());
-                PostRepository.save(post);
+                viewModel.save(post);
 
                 uploadFile(foto);
             }

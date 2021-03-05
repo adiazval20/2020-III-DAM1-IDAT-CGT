@@ -2,12 +2,20 @@ package edu.idat.semana6.entity;
 
 import android.graphics.Bitmap;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Post {
+    @PrimaryKey
+    @NonNull
     private long id;
+
     private String titulo;
     private String descripcion;
     private String urlImagen;
-    private Bitmap imagen;
     private String nombreImagen;
 
 
@@ -15,6 +23,7 @@ public class Post {
 
     }
 
+    @Ignore
     public Post(long id, String titulo, String descripcion, String urlImagen) {
         this.id = id;
         this.titulo = titulo;
@@ -52,14 +61,6 @@ public class Post {
 
     public void setUrlImagen(String urlImagen) {
         this.urlImagen = urlImagen;
-    }
-
-    public Bitmap getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(Bitmap imagen) {
-        this.imagen = imagen;
     }
 
     public String getNombreImagen() {
