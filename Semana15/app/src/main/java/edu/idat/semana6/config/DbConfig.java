@@ -28,14 +28,14 @@ public abstract class DbConfig extends RoomDatabase {
             dbExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    Post post = new Post();
-                    post.setId(1);
-                    post.setTitulo("Publicación de prueba 1");
-                    post.setDescripcion("Descripción de prueba 1");
-                    post.setNombreImagen("JPG_20210305_001809_8363550784102608100.jpg");
-
-                    PostDao dao = dbConfig.postDao();
-                    dao.create(post);
+//                    Post post = new Post();
+//                    post.setDbId(1);
+//                    post.setTitulo("Publicación de prueba 1");
+//                    post.setDescripcion("Descripción de prueba 1");
+//                    post.setNombreImagen("JPG_20210305_001809_8363550784102608100.jpg");
+//
+//                    PostDao dao = dbConfig.postDao();
+//                    dao.create(post);
                 }
             });
         }

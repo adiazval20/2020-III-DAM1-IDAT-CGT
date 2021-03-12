@@ -22,20 +22,23 @@ import edu.idat.semana6.entity.Post;
 
 public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
     private List<Post> posts;
+    private int layout;
 
     public PostAdapter() {
         this.posts = new ArrayList<>();
+        this.layout = R.layout.item_post;
     }
 
-    public PostAdapter(List<Post> posts) {
-        this.posts = posts;
+    public PostAdapter(int layout) {
+        this.posts = new ArrayList<>();
+        this.layout = layout;
     }
 
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post, parent, false);
-        return new PostViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
+        return new PostViewHolder(view, layout);
     }
 
     @Override

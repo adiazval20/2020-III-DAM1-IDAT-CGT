@@ -27,46 +27,27 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
     private FirebaseStorage storage;
     private ImageView imgPost;
     private TextView txtTitulo, txtDescripcion;
+    private int layout;
 
-    public PostViewHolder(@NonNull View itemView) {
+    public PostViewHolder(@NonNull View itemView, int layout) {
         super(itemView);
-
+        this.layout = layout;
         storage = FirebaseStorage.getInstance();
 
         imgPost = itemView.findViewById(R.id.imgPost);
-        txtTitulo = itemView.findViewById(R.id.txtTitulo);
-        txtDescripcion = itemView.findViewById(R.id.txtDescripcion);
+
+        if (layout == R.layout.item_post) {
+            txtTitulo = itemView.findViewById(R.id.txtTitulo);
+            txtDescripcion = itemView.findViewById(R.id.txtDescripcion);
+        }
     }
 
     public void loadData(Post post) {
-//        Picasso.get().load(post.getUrlImagen()).into(imgPost);
-//        Bitmap foto = BitmapFactory.decodeFile(post.getUrlImagen());
-//        imgPost.setImageBitmap(foto);
+        Picasso.get().load(post.getUrlImagen()).into(imgPost);
 
-        try {
-            File archivoLocal = File.createTempFile("images", "jpg");
-            String ruta = "fotos/" + post.getNombreImagen();
-
-            StorageReference reference = storage.getReference(ruta);
-            reference.getFile(archivoLocal).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                    Bitmap foto = BitmapFactory.decodeFile(archivoLocal.getAbsolutePath());
-                    imgPost.setImageBitmap(foto);
-                    Toast.makeText(itemView.getContext(), "Imagen cargada!", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (layout == R.layout.item_post) {
+            txtTitulo.setText(post.getTitulo());
+            txtDescripcion.setText(post.getDescripcion());
         }
-
-        txtTitulo.setText(post.getTitulo());
-        txtDescripcion.setText(post.getDescripcion());
     }
 }

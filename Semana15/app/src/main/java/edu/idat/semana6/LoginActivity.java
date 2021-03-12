@@ -19,6 +19,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.List;
+
+import edu.idat.semana6.api.PostApi;
+import edu.idat.semana6.api.ResponseListApi;
+import edu.idat.semana6.config.ApiConfig;
+import edu.idat.semana6.entity.Post;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private EditText edtUsername, edtPassword;
@@ -28,6 +38,20 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+//        PostApi postApi = ApiConfig.getPostApi();
+//        postApi.list().enqueue(new Callback<ResponseListApi<Post>>() {
+//            @Override
+//            public void onResponse(Call<ResponseListApi<Post>> call, Response<ResponseListApi<Post>> response) {
+//                List<Post> posts = response.body().getData();
+//                Toast.makeText(LoginActivity.this, String.valueOf(posts.size()), Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseListApi<Post>> call, Throwable t) {
+//                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+//            }
+//        });
 
         auth = FirebaseAuth.getInstance();
 

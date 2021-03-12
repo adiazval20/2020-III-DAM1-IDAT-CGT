@@ -16,7 +16,7 @@ public interface PostDao {
     @Query("SELECT * FROM Post")
     LiveData<List<Post>> list();
 
-    @Query("SELECT * FROM Post WHERE id = :id")
+    @Query("SELECT * FROM Post WHERE dbId = :id")
     LiveData<Post> find(long id);
 
     @Insert
@@ -31,6 +31,6 @@ public interface PostDao {
     @Query("DELETE FROM post")
     void clear();
 
-    @Query("DELETE FROM Post WHERE id = :id")
+    @Query("DELETE FROM Post WHERE dbId = :id")
     void deleteById(long id);
 }
